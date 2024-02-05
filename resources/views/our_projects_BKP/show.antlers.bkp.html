@@ -1,0 +1,82 @@
+<section class="w-full">
+    <div class="px-8 mx-auto mt-32 text-lg font-bold uppercase submenu max-w-7xl">
+        <a class="text-light hover:text-lime">Events</a><br>
+        <a class="text-light hover:text-lime">Creativity</a><br>
+        <a class="text-light hover:text-lime">Photo</a><br>
+    </div>
+</section>
+
+ <section class="mx-auto max-w-7xl">
+  <div class="flex items-center justify-center mt-8">
+    <div x-data="gallery()" x-init="init()" class="relative w-full">
+      <!-- Previous Button -->
+      <!-- <button class="absolute left-0 p-2 transform -translate-y-1/2 bg-gray-200 rounded-full top-1/2 hover:bg-gray-300">
+        <svg class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button> -->
+
+      <!-- Next Button -->
+      <!-- <button @click="next()" class="absolute right-0 p-2 transform -translate-y-1/2 bg-gray-200 rounded-full top-1/2 hover:bg-gray-300">
+        <svg class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button> -->
+
+      <!-- Previous Picture -->
+      <img :src="images[prevIndex()]" @click="prev()" class="absolute left-0 w-1/5 h-auto rounded-lg shadow opacity-50" alt="Previous Image">
+
+      <!-- Main Image -->
+      <img :src="images[currentIndex]" class="w-full h-auto rounded-lg shadow" alt="Gallery Image">
+
+      <!-- Next Picture -->
+      <img :src="images[nextIndex()]" @click="next()" class="absolute right-0 w-1/5 h-auto rounded-lg shadow opacity-50" alt="Next Image">
+
+      <!-- Thumbnail Images -->
+      <!-- <div class="flex justify-center mt-4">
+        <template x-for="(image, index) in images" :key="index">
+          <img @click="setCurrentIndex(index)" :src="image" class="w-12 h-12 mx-1 rounded-lg cursor-pointer" alt="Thumbnail Image">
+        </template>
+      </div> -->
+    </div>
+  </div>
+</section>
+
+<script>
+  function gallery() {
+    return {
+      images: [
+        'https://images.unsplash.com/photo-1661956602153-23384936a1d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80',
+        'https://images.unsplash.com/photo-1674574124976-a56d9052c2f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80',
+        'https://images.unsplash.com/photo-1683053243792-28e9d984c25a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2680&q=80',
+        'https://images.unsplash.com/photo-1686695324533-8bb24373ff47?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2938&q=80',
+        'https://images.unsplash.com/photo-1682695794947-17061dc284dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80'
+      ],
+      currentIndex: 0,
+
+      init() {
+        this.setCurrentIndex(0);
+      },
+
+      setCurrentIndex(index) {
+        this.currentIndex = index;
+      },
+
+      next() {
+        this.currentIndex = (this.currentIndex + 1) % this.images.length;
+      },
+
+      prev() {
+        this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+      },
+
+      prevIndex() {
+        return (this.currentIndex - 1 + this.images.length) % this.images.length;
+      },
+
+      nextIndex() {
+        return (this.currentIndex + 1) % this.images.length;
+      }
+    };
+  }
+</script>

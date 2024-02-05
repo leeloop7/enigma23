@@ -1,0 +1,71 @@
+<div id="topHeader" class="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-8 transition-all duration-300">
+    <a class="absolute z-100" href="/">
+        <img id="topLogo" src="/img/enigma_light.png" class="h-10 transition-opacity duration-300" alt="">
+    </a>
+    <button id="menuButton" class="text-4xl text-white transition-opacity duration-300 right-8" onclick="toggleMenu()">
+        &#9776;
+    </button>
+</div>
+
+<div id="scrollHeader" class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 transition-all duration-300 opacity-0">
+    <a class="absolute z-100" href="/">
+        <img id="scrollLogo" src="/img/ENIGMA_VPRASAJ_white.png" class="h-10 transition-opacity duration-300" alt="">
+    </a>
+    <button id="scrollMenuButton" class="text-4xl text-white transition-opacity duration-300 right-8" onclick="toggleMenu()">
+        &#9776;
+    </button>
+</div>
+
+<!-- Implement the overlay menu -->
+<div id="menu" class="fixed top-0 left-0 z-50 flex flex-col items-center justify-center w-screen h-screen transition-all duration-700 opacity-0 pointer-events-none bg-dark">
+    <a href="javascript:void(0)" class="fixed top-6 right-8 text-light text-7xl hover:text-pink" onclick="toggleMenu()">&times;</a>
+    <div class="flex flex-col space-y-4 text-5xl font-bold text-light">
+        {{ collection:pages offset="1" }}
+            <a class="duration-300 {{ color }} hover:text-6xl hover:transparent-text" href="{{ url }}">{{ title }}</a>
+        {{ /collection:pages }}
+    </div>
+</div>
+
+<script>
+    var logoChanged = false;
+    var topLogo = document.getElementById('topLogo');
+    var scrollLogo = document.getElementById('scrollLogo');
+    var scrollHeader = document.getElementById('scrollHeader');
+    var menuButton = document.getElementById('menuButton');
+    var scrollMenuButton = document.getElementById('scrollMenuButton');
+    var menu = document.getElementById('menu');
+
+    window.addEventListener('scroll', function() {
+        var topHeader = document.getElementById('topHeader');
+        var scrollY = window.scrollY;
+
+        if (scrollY > 200 && !logoChanged) {
+            topHeader.classList.add('bg-dark', 'bg-opacity-70');
+            topLogo.style.opacity = 0;
+
+            setTimeout(function() {
+                topLogo.style.opacity = 1;
+                scrollLogo.style.opacity = 1;
+                scrollHeader.style.opacity = 1;
+            }, 300);
+
+            logoChanged = true;
+        } else if (scrollY <= 200 && logoChanged) {
+            topHeader.classList.remove('bg-dark', 'bg-opacity-70');
+            topLogo.style.opacity = 0;
+
+            setTimeout(function() {
+                topLogo.style.opacity = 1;
+                scrollLogo.style.opacity = 0;
+                scrollHeader.style.opacity = 0;
+            }, 300);
+
+            logoChanged = false;
+        }
+    });
+
+    function toggleMenu() {
+        menu.classList.toggle('opacity-0');
+        menu.classList.toggle('pointer-events-none');
+    }
+</script>

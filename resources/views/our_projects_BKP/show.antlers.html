@@ -1,0 +1,72 @@
+<section class="w-full">
+    <div class="px-8 mx-auto mt-32 text-lg uppercase submenu max-w-7xl">
+        <div
+            class="inset-0 z-10 items-center justify-center py-4 text-center transition-opacity duration-300"
+        >
+            <span class="text-lg font-bold text-white">{{ title }}</span>
+        </div>
+    </div>
+</section>
+
+<section class="mx-auto max-w-7xl">
+    <div class="flex items-center justify-center mt-8">
+        <!-- Display all project images using a loop -->
+        <div x-data="gallery()" x-init="init()" class="relative w-full">
+            <template x-for="(image, index) in images" :key="index">
+                <img
+                    :src="image"
+                    class="z-20 w-2/3 h-auto mx-auto rounded-lg shadow"
+                    alt="Gallery Image"
+                />
+            </template>
+        </div>
+    </div>
+</section>
+{{ dump(image) }}
+
+<section>
+    <div class="mx-auto mt-12 text-center">
+        <a href="/our-projects" class="more_projects">View all projects</a>
+    </div>
+</section>
+
+<script>
+    // Create a JavaScript array to hold the images from the current Statamic project
+    let projectImages = [
+        {{ image }}
+            "{{ value }}",
+        {{ /image }}
+    ];
+
+    function gallery() {
+        return {
+            images: projectImages,
+            currentIndex: 0,
+
+            init() {
+                this.setCurrentIndex(0);
+                console.log(this.images); // Add this line for debugging
+            },
+
+            setCurrentIndex(index) {
+                this.currentIndex = index;
+            },
+
+            next() {
+                this.currentIndex = (this.currentIndex + 1) % this.images.length;
+            },
+
+            prev() {
+                this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+            },
+
+            prevIndex() {
+                return (this.currentIndex - 1 + this.images.length) % this.images.length;
+            },
+
+            nextIndex() {
+                return (this.currentIndex + 1) % this.images.length;
+            },
+        };
+    }
+</script>

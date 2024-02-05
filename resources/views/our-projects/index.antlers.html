@@ -1,0 +1,70 @@
+<section class="w-full">
+    <div
+        class="px-8 mx-auto mt-32 text-lg font-bold uppercase submenu max-w-7xl"
+    >
+        <a class="text-light hover:text-lime" data-category="event">Events</a
+        ><br />
+        <a class="text-light hover:text-lime" data-category="creativity"
+            >Creativity</a
+        ><br />
+        <a class="text-light hover:text-lime" data-category="photo">Photo</a
+        ><br />
+    </div>
+    <div class="grid grid-cols-2 mt-8 sm:grid-cols-5 sm:grid-rows-3 sm:ml-32">
+        {{ collection:our-projects }}
+
+        <div
+            class="image-container text-white
+    {{ if index == 4 }}sm:h-128 sm:col-span-1 sm:row-span-2{{ elseif index == 6 }}sm:h-64 sm:col-span-2{{ else }}h-64 bg-gray-300{{ /if }}"
+            data-category="{{ type }}"
+        >
+            {{ responsive:main_photo src="{{ image[0] }}" alt="{{ title }}"
+            class="object-cover w-full h-full" }}
+
+            <div class="flex flex-col space-y-2 image-overlay">
+                <div class="text-lg font-bold">{{ title }}</div>
+                <div>{{ customer }}</div>
+                <div>{{ location }}</div>
+                <div>{{ size }} m<sup>2</sup></div>
+                <a
+                    href="/our-projects/{{ slug }}"
+                    class="px-4 py-2 mt-2 text-white rounded bg-lime hover:bg-lime-dark"
+                    >More about...</a
+                >
+            </div>
+        </div>
+
+        {{ /collection:our-projects }}
+    </div>
+</section>
+
+<script>
+    const buttons = document.querySelectorAll(".submenu a");
+    const projects = document.querySelectorAll(".image-container");
+
+    buttons.forEach((button) => {
+        button.addEventListener("click", function () {
+            const category = this.getAttribute("data-category"); // Get the data-category of the clicked button
+
+            // Filter projects based on category
+            projects.forEach((project) => {
+                if (project.dataset.category === category) {
+                    project.style.opacity = "1";
+                    project.style.filter = "none";
+                } else {
+                    project.style.opacity = "0.5";
+                    project.style.filter = "grayscale(1)";
+                }
+            });
+
+            // Update submenu button styling
+            buttons.forEach((btn) => {
+                if (btn === this) {
+                    btn.classList.add("text-lime");
+                } else {
+                    btn.classList.remove("text-lime");
+                }
+            });
+        });
+    });
+</script>

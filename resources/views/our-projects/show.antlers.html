@@ -1,0 +1,79 @@
+<section class="w-full">
+    <div
+        class="px-8 mx-auto mt-32 text-lg font-bold uppercase submenu max-w-7xl"
+    >
+        <span class="text-light hover:text-lime">{{ title }}</span><br />
+        <span class="text-light hover:text-lime">{{ ime_projekta }}</span><br />
+        <span class="text-light hover:text-lime">{{ lokacija_projekta }}</span
+        ><br />
+        <span class="text-light hover:text-lime">{{ stranka }}</span><br />
+        <span class="text-light hover:text-lime"
+            >{{ velikost_razstavnega_prostora }} m<sup>2</sup></span
+        >
+    </div>
+</section>
+
+<!-- Slider main container -->
+<div class="swiper">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+        <!-- Slides -->
+        {{ assets:gallery }}
+        <div class="swiper-slide">
+            <img src="{{ url }}" alt="{{ alt }}" />
+        </div>
+        {{ /assets:gallery }} ...
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <!-- If we need scrollbar -->
+    <div class="swiper-scrollbar"></div>
+</div>
+
+<!-- <div class="px-8 mx-auto max-w-7xl">
+    <section class="splide" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                {{ assets:gallery }}
+                <li class="splide__slide">
+                    <img src="{{ url }}" alt="{{ alt }}" />
+                </li>
+                {{ /assets:gallery }}
+            </ul>
+        </div>
+        <!-- Add the progress bar element -->
+        <div class="mt-4 my-carousel-progress">
+            <div class="my-carousel-progress-bar"></div>
+        </div>
+    </section>
+</div> -->
+
+<section>
+    <div class="mx-auto mt-12 text-center">
+        <a href="/our-projects" class="more_projects">View all projects</a>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var splide = new Splide(".splide", {
+            type: "loop",
+            perPage: 1,
+            heightRatio: 0.6,
+        });
+        var bar = splide.root.querySelector(".my-carousel-progress-bar");
+
+        // Updates the bar width whenever the carousel moves:
+        splide.on("mounted move", function () {
+            var end = splide.Components.Controller.getEnd() + 1;
+            var rate = Math.min((splide.index + 1) / end, 1);
+            bar.style.width = String(100 * rate) + "%";
+        });
+        splide.mount();
+    });
+</script>

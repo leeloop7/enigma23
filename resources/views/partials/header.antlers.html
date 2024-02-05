@@ -1,0 +1,102 @@
+<div id="scrollHeader" class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-8 bg-gray-200 opacity-0">
+  <a href="/" class="flex items-center">
+    <img id="scrollLogo" src="/img/ENIGMA_VPRASAJ_white.png" alt="Scroll Logo" class="h-8">
+  </a>
+  <button id="scrollMenuButton" class="text-light burger" onclick="toggleMenu()">
+    <span class="burger-line"></span>
+    <span class="burger-line"></span>
+  </button>
+</div>
+
+<div id="topHeader" class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-8 transition-all duration-300 bg-gray-200">
+  <a href="/" class="flex items-center">
+    <img id="topLogo" src="/img/enigma_light.png" alt="Logo" class="h-8">
+  </a>
+  <button id="menuButton" class="text-light burger" onclick="toggleMenu()">
+    <span class="burger-line"></span>
+    <span class="burger-line"></span>
+  </button>
+</div>
+
+
+
+<div id="menu" class="fixed top-0 right-0 z-40 flex flex-col items-center justify-center w-auto h-full px-12 text-left transition-transform duration-300 ease-in-out transform translate-x-full bg-pink">
+  {{ collection:pages offset="1" }}
+  <a class="z-30 block py-4 text-3xl font-bold transition-all duration-300 text-light hover:scale-110" href="{{ url }}">{{ title }}</a>
+  {{ /collection:pages }}
+</div>
+
+<style>
+.burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    width: 32px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.3s ease;
+}
+
+.burger-line {
+  width: 100%;
+  height: 2px;
+  margin: 4px 0;
+  background-color: #ccc;
+  transition: background-color 0.3s ease;
+}
+
+.burger.open .burger-line:nth-child(1) {
+  transform: rotate(45deg) translate(3px, 4px);
+}
+
+.burger.open .burger-line:nth-child(2) {
+  transform: rotate(-45deg) translate(3px, -4px);
+}
+
+#menu.open {
+    transform: translateX(0);
+}
+</style>
+
+<script>
+var topHeader = document.getElementById('topHeader');
+var scrollHeader = document.getElementById('scrollHeader');
+var topLogo = document.getElementById('topLogo');
+var scrollLogo = document.getElementById('scrollLogo');
+var menuButton = document.getElementById('menuButton');
+var scrollMenuButton = document.getElementById('scrollMenuButton');
+var menu = document.getElementById('menu');
+
+window.addEventListener('scroll', function() {
+  var scrollY = window.scrollY;
+
+  if (scrollY > 200) {
+    topHeader.classList.add('opacity-0');
+    scrollHeader.classList.remove('opacity-0');
+    topLogo.style.opacity = 0;
+    scrollLogo.style.opacity = 1;
+  } else {
+    topHeader.classList.remove('opacity-0');
+    scrollHeader.classList.add('opacity-0');
+    topLogo.style.opacity = 1;
+    scrollLogo.style.opacity = 0;
+  }
+});
+
+menuButton.addEventListener('click', function() {
+  menu.classList.toggle('open');
+  menuButton.classList.toggle('open');
+  scrollMenuButton.classList.toggle('open');
+});
+
+scrollMenuButton.addEventListener('click', function() {
+  menu.classList.toggle('open');
+  menuButton.classList.toggle('open');
+  scrollMenuButton.classList.toggle('open');
+});
+
+</script>
